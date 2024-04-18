@@ -4,7 +4,6 @@ import { Signale } from "signale";
 import dotenv from "dotenv";
 import { connectToDatabase } from "./database/mongodb";
 
-import { bookRouter } from "./book/infraestructure/routes/BookRouter";
 import { userRouter } from "./user/infraestructure/routes/UserRouter";
 import { authRouter } from "./user/infraestructure/routes/AuthRouter";
 
@@ -18,7 +17,6 @@ const signale = new Signale();
 
 app.use(express.json());
 app.use(morgan("dev"));
-app.use("/books", bookRouter);
 app.use("/users",userRouter);
 app.use("/auth", authRouter);
 
