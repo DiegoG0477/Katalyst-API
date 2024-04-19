@@ -3,6 +3,8 @@ import morgan from "morgan";
 import { Signale } from "signale";
 import dotenv from "dotenv";
 import { connectToDatabase } from "./database/mongodb";
+import cors from 'cors'
+
 
 import { userRouter } from "./user/infraestructure/routes/UserRouter";
 import { authRouter } from "./user/infraestructure/routes/AuthRouter";
@@ -16,6 +18,7 @@ const app = express();
 const signale = new Signale();
 
 app.use(express.json());
+app.use(cors());
 app.use(morgan("dev"));
 app.use("/users",userRouter);
 app.use("/auth", authRouter);
