@@ -12,7 +12,7 @@ export class LoginUseCase {
 
     async run(email: string, password: string): Promise<string | null> {
         try {
-            const encoded = await this.userRepository.getPassword(email);
+            const encoded = await this.userRepository.getPasswordByEmail(email);
             if (encoded === null) {
                 return null;
             }

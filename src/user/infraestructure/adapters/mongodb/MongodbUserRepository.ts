@@ -20,6 +20,12 @@ export class MongodbUserRepository implements UserRepository{
         return user.password;
     }
 
+    async getPasswordByEmail(email: string): Promise<string | null> {
+        const user = await UserMongodbModel.findOne({email: email});
+        if(!user) return null;
+        return user.password;
+    }
+
     async changePassword(email: string, password: string): Promise<boolean | null> {
         const user = await UserMongodbModel.findOneAndUpdate({email: email}, {password: password});
         if(!user) return false;
