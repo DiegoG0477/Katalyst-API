@@ -3,12 +3,18 @@ import { GetAllUsersUseCase } from "../application/use-cases/GetAllUSersUseCase"
 import { GetPasswordUseCase } from "../application/use-cases/GetPasswordUseCase";
 import { RegisterUserUseCase } from "../application/use-cases/RegisterUserUseCase";
 import { LoginUseCase } from "../application/use-cases/LoginUseCase";
+import { GetUserById } from "../application/use-cases/GetUserById";
+import { DeleteUserUseCase } from "../application/use-cases/DeleteUserUseCase";
+import { UpdateUserUseCase } from "../application/use-cases/UpdateUserUseCase";
 
 import { ChangePasswordController } from "./controllers/ChangePasswordController";
 import { GetAllUsersController } from "./controllers/GetAllUsersController";
 import { GetPasswordController } from "./controllers/GetPasswordController";
 import { RegisterUserController } from "./controllers/RegisterUserController";
 import { LoginController } from "./controllers/LoginController";
+import { GetProfileUserController } from "./controllers/GetProfileUserController";
+import { DeleteUserUseController } from "./controllers/DeleteUserController";
+import { UpdateUserController } from "./controllers/UpdateUserController";
 
 import { EncryptPasswordService } from "./services/EncryptPasswordService";
 
@@ -33,6 +39,18 @@ export const getPasswordUseCase = new GetPasswordUseCase(mongodbRepository);
 export const changePasswordUseCase = new ChangePasswordUseCase(mongodbRepository, encryptPasswordService);
 
 export const getAllUsersUseCase = new GetAllUsersUseCase(mongodbRepository);
+
+export const getUserByIdUseCase = new GetUserById(mongodbRepository);
+
+export const deleteUserUseCase = new DeleteUserUseCase(mongodbRepository);
+
+export const updateUserUseCase = new UpdateUserUseCase(mongodbRepository, encryptPasswordService);
+
+export const getProfileUserController = new GetProfileUserController(getUserByIdUseCase);
+
+export const deleteUseController = new DeleteUserUseController(deleteUserUseCase);
+
+export const updateUserController = new UpdateUserController(updateUserUseCase);
 
 export const registerUserController = new RegisterUserController(registerUserUseCase);
 
