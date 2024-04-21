@@ -2,15 +2,17 @@ import { Request, Response } from "express";
 import { GetUserById } from "../../application/use-cases/GetUserById";
 
 interface CustomRequest extends Request {
-    userId: string;
+    user: any;
 }
 
 export class GetProfileUserController {
     constructor(readonly getUserById: GetUserById) {}
 
     async run(req: Request, res: Response) {
-        const id = (req as CustomRequest).userId;
+        const userReq = (req as CustomRequest).user;
+        const id = userReq.id;
         try {
+            console.log('userReq:', userReq);
             const user = await this.getUserById.run(id);
             if (user) {
                 res.status(200).send({

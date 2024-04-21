@@ -13,9 +13,11 @@ export class LoginUseCase {
     async run(email: string, password: string): Promise<string | null> {
         try {
             const encoded = await this.userRepository.getPasswordByEmail(email);
+            
             if (encoded === null) {
                 return null;
             }
+            
             const isValid = await this.encryptService.verifyPassword(
                 password,
                 encoded
@@ -25,7 +27,13 @@ export class LoginUseCase {
                 return null;
             }
 
-            const authCredentials = new AuthCredentials(email, password);
+            const id = await this.userRepository.getIdByEmail(email);
+
+            if (id === null) {
+                return null;
+            }
+
+            const authCredentials = new AuthCredentials(id, email, password);
 
             const token = await this.tokenService.generateToken(
                 authCredentials

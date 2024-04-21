@@ -2,15 +2,16 @@ import { Request, Response } from 'express';
 import { UpdateUserUseCase } from '../../application/use-cases/UpdateUserUseCase';
 
 interface CustomRequest extends Request {
-    userId: string;
+    user: any;
 }
 
 export class UpdateUserController {
     constructor(readonly updateUserUseCase: UpdateUserUseCase) {}
 
     async run(req: Request, res: Response) {
-        const id = (req as CustomRequest).userId;
+        const userReq = (req as CustomRequest).user;
         const data = req.body;
+        const id = userReq.id;
         
         try {
             const user = await this.updateUserUseCase.run(

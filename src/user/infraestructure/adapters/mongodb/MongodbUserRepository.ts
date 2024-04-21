@@ -48,4 +48,10 @@ export class MongodbUserRepository implements UserRepository{
         if(!result) return false;
         return true;
     }
+
+    async getIdByEmail(email: string): Promise<string | null> {
+        const user = await UserMongodbModel.findOne({email: email});
+        if(!user) return null;
+        return user.id;
+    }
 }
