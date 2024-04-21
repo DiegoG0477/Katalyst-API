@@ -3,7 +3,7 @@ import morgan from "morgan";
 import { Signale } from "signale";
 import dotenv from "dotenv";
 import { connectToDatabase } from "./database/mongodb";
-import cors from 'cors'
+import cors from 'cors';
 
 
 import { userRouter } from "./user/infraestructure/routes/UserRouter";
@@ -18,7 +18,12 @@ const app = express();
 const signale = new Signale();
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Access-Control-Allow-Origin', 'Access-Control-Allow-Headers', 'x-access-token', 'Origin', 'X-Requested-With', 'Accept', 'access_token' ],
+}));
+
 app.use(morgan("dev"));
 app.use("/users",userRouter);
 app.use("/auth", authRouter);
